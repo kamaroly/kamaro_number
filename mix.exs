@@ -29,7 +29,7 @@ defmodule KamaroNumber.MixProject do
   end
 
   defp description() do
-    "A minimal package to convert numbers into Words such as one hundred twenty three point thirty seven instead of 123.37."
+    "A minimal package to convert numbers into Words such as one hundred twenty three point thirty seven from 123.37."
   end
 
   defp package() do
