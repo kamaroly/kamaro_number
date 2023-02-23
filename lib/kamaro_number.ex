@@ -7,7 +7,7 @@ defmodule KamaroNumber do
   @hyphen "-"
   @conjunction " and "
   @separator ", "
-  @negative " negative "
+  @negative "negative "
   @decimal " point "
 
   @dictionary %{
@@ -57,9 +57,14 @@ defmodule KamaroNumber do
 
       iex> KamaroNumber.spell_out(-29.7)
       "negative twenty-nine point seven"
-
   """
-  def spell_out(number) when number < 0, do: @negative <> spell_out(abs(number))
+  def spell_out(number) when number < 0 and is_integer(number) do
+    @negative <> spell_out(abs(number))
+  end
+
+  def spell_out(number) when number < 0 and is_float(abs(number)) do
+    @negative <> convert(abs(number))
+  end
 
   def spell_out(number) when number < 21 do
     Atom.to_string(@dictionary[number])
@@ -125,7 +130,7 @@ defmodule KamaroNumber do
   ## Examples
 
       iex> KamaroNumber.spell_out(34)
-      "thirty four"
+      "thirty-four"
 
   """
   def log(number, base) do
@@ -140,7 +145,7 @@ defmodule KamaroNumber do
   ## Examples
 
       iex> KamaroNumber.convert(34.3)
-      "thirty four point three"
+      "thirty-four point three"
 
   """
   def convert(number) when is_float(number) do
