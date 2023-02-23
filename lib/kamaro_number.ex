@@ -139,7 +139,7 @@ defmodule KamaroNumber do
 
   ## Examples
 
-      iex> KamaroNumber.convert(343)
+      iex> KamaroNumber.convert(34.3)
       "thirty four point three"
 
   """
