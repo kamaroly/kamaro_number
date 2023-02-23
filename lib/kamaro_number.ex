@@ -1,6 +1,6 @@
 defmodule KamaroNumber do
   @moduledoc """
-  This is the KamaroNumber module.
+  An Elixir package to spell out numbers into Words such as one hundred twenty three point thirty seven.
   """
   @moduledoc since: "0.1.0"
 
