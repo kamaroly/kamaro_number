@@ -1,11 +1,11 @@
 defmodule KamaroNumber do
   @moduledoc """
-  Documentation for `KamaroNumber`.
+  This is the KamaroNumber module.
   """
-  # In english it is  -
+  @moduledoc since: "0.1.0"
+
   @hyphen "-"
   @conjunction " and "
-  # in english it's ,
   @separator ", "
   @negative " negative "
   @decimal " point "
@@ -48,21 +48,22 @@ defmodule KamaroNumber do
     1_000_000_000_000_000_000 => :quintillion
   }
 
-  """
-   Convert negatives
-  """
+  @doc """
+  Convert negative number words given `number`.
 
+  Returns `String`.
+
+  ## Examples
+
+      iex> KamaroNumber.spell_out(-29.7)
+      "negative twenty-nine point seven"
+
+  """
   def spell_out(number) when number < 0, do: @negative <> spell_out(abs(number))
 
-  """
-    Spells out numbers below 21
-  """
-
-  def spell_out(number) when number < 21, do: @dictionary[number] |> Atom.to_string()
-
-  """
-    Spells out numbers below 100
-  """
+  def spell_out(number) when number < 21 do
+    Atom.to_string(@dictionary[number])
+  end
 
   def spell_out(number) when number < 100 do
     tens = div(number, 10) * 10
@@ -76,10 +77,6 @@ defmodule KamaroNumber do
     end
   end
 
-  """
-    Spells out numbers below 1000
-  """
-
   def spell_out(number) when number < 1000 do
     hundreds = div(number, 100)
     remainder = rem(number, 100)
@@ -92,10 +89,6 @@ defmodule KamaroNumber do
       _ -> words <> " " <> spell_out(remainder)
     end
   end
-
-  """
-    Spells out numbers above 1000
-  """
 
   def spell_out(number) do
     based_number =
@@ -113,31 +106,43 @@ defmodule KamaroNumber do
       spell_out(number_base_units) <>
         " " <> Atom.to_string(@dictionary[base_unit])
 
-    if is_nil(words), do: raise(base_unit)
-
     case remainder do
       0 ->
         words
 
       _ ->
         words_with_separator = words <> if remainder < 100, do: @conjunction, else: @separator
-        words = words_with_separator <> spell_out(remainder)
+        words_with_separator <> spell_out(remainder)
     end
   end
 
-  """
-   Covers for the missing logarithm function in Erlang/ Elixir
-   for any base
-  """
+  @doc """
+  Calculates logarithm of any number in any base.
+  Covers for the missing logarithm function in Erlang/ Elixir
 
+  Returns `float`.
+
+  ## Examples
+
+      iex> KamaroNumber.spell_out(34)
+      "thirty four"
+
+  """
   def log(number, base) do
     :math.log(number) / :math.log(base)
   end
 
-  """
-    Converts float to words
-  """
+  @doc """
+  Converts number to words
 
+  Returns `string`.
+
+  ## Examples
+
+      iex> KamaroNumber.spell_out(343)
+      "thirty four point three"
+
+  """
   def convert(number) when is_float(number) do
     # Begin by separating int and fractions
     [number, fraction] =
@@ -165,10 +170,6 @@ defmodule KamaroNumber do
     # Display the final results
     spell_out(number) <> @decimal <> Enum.join(fractions, " ")
   end
-
-  """
-    Convert integer
-  """
 
   def convert(number) when is_integer(number) do
     spell_out(number)

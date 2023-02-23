@@ -35,7 +35,7 @@ defmodule KamaroNumber.MixProject do
       # This option is only needed when you don't want to use the OTP application name
       name: "kamaro_number",
       # These are the default files included in the package
-      files: ~w(lib test .formatter.exs mix.exs README* readme*),
+      files: ~w(lib test .formatter.exs mix.exs README*),
       licenses: ["MIT License"],
       links: %{"GitHub" => "https://github.com/kamaroly/kamaro_number"}
     ]
